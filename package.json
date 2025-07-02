@@ -1,0 +1,16 @@
+{
+  "name": "tg-bot",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.50.2",
+    "dotenv": "^17.0.1",
+    "grammy": "^1.36.3"
+  }
+}
