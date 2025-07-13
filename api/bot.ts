@@ -587,5 +587,5 @@ bot.catch(err => {
 	console.error("❌ Глобальная ошибка:", err)
 })
 
-bot.start()
-// export default webhookCallback(bot, "https")
+// bot.start()
+export default webhookCallback(bot, "https")
