@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js"
 import "dotenv/config"
-import { Bot, InlineKeyboard, Keyboard, session, SessionFlavor } from "grammy"
+import { Bot, InlineKeyboard, Keyboard, session, SessionFlavor, webhookCallback } from "grammy"
 
 // 🌐 Supabase client
 const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!)
