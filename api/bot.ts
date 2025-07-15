@@ -1,6 +1,13 @@
 import { createClient } from "@supabase/supabase-js"
 import "dotenv/config"
-import { Bot, InlineKeyboard, Keyboard, session, SessionFlavor, webhookCallback } from "grammy"
+import {
+	Bot,
+	InlineKeyboard,
+	Keyboard,
+	session,
+	SessionFlavor,
+	webhookCallback,
+} from "grammy"
 
 // 🌐 Supabase client
 const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_KEY!)
@@ -78,10 +85,14 @@ function parseExpenseLine(line: string) {
 const emojiMap: Record<string, string> = {
 	еда: "🍔",
 	ресторан: "🍽️",
+	tele2: "📲",
+	снюс: "🪙",
 	компы: "💻",
 	грибы: "🍄",
+	Прочее: "🧾",
+	Стрижка: "🫠",
 	такси: "🚕",
-	транспорт: "🚌",
+	автобус: "🚌",
 	одежда: "👕",
 	здоровье: "💊",
 	кофе: "☕",
@@ -98,7 +109,7 @@ const emojiMap: Record<string, string> = {
 
 function getEmoji(category: string) {
 	const lower = category.toLowerCase()
-	return emojiMap[lower] || "💸"
+	return emojiMap[lower] || "💰"
 }
 
 const defaultMenu = new Keyboard()
@@ -120,7 +131,9 @@ const defaultMenu = new Keyboard()
 const foodSubcategoryKeyboard = new InlineKeyboard()
 	.text("Яндекс", "food_yandex")
 	.text("Small", "food_small")
+	.row()
 	.text("Продуктовый", "food_grocery")
+	.text("Додо", "food_dodo")
 	.row()
 	.text("Отмена", "food_cancel")
 
@@ -241,7 +254,13 @@ bot.callbackQuery(/^food_(.+)$/, async ctx => {
 		const userId = await getUserId(ctx)
 		const { category, comment, amount } = ctx.session.pendingExpense
 		const subcategory =
-			action === "yandex" ? "Яндекс" : action === "small" ? "Small" : "Продуктовый"
+			action === "yandex"
+				? "Яндекс"
+				: action === "small"
+				? "Small"
+				: action === "dodo"
+				? "Додо"
+				: "Продуктовый"
 
 		const { error } = await supabase.from("expenses").insert({
 			user_id: userId,
